@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+  caches_page :index
+  caches_page :show
+
   def index
     @tag = params[:tag]
     @posts = Post.find_recent(:tag => @tag, :include => :tags)

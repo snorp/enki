@@ -1,6 +1,7 @@
 class Admin::PagesController < Admin::BaseController
   before_filter :find_page, :only => [:show, :update, :destroy]
-
+  cache_sweeper :page_sweeper, :only => [:create, :update, :destroy]
+  
   def index
     respond_to do |format|
       format.html {

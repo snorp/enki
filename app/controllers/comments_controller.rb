@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
   include UrlHelper
   has_rakismet :only => :create
+  caches_page :index
+  cache_sweeper :comment_sweeper, :only => [:create]
   
   OPEN_ID_ERRORS = { 
     :missing  => "Sorry, the OpenID server couldn't be found", 

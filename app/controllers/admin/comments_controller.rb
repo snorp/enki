@@ -1,6 +1,7 @@
 class Admin::CommentsController < Admin::BaseController
   before_filter :find_comment, :only => [:show, :update, :destroy]
-
+  cache_sweeper :comment_sweeper, :only => [:create, :update, :destroy]
+  
   def index
     @comments = Comment.paginate(
       :include => "post",
