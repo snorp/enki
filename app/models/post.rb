@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  DEFAULT_LIMIT = 15
+  DEFAULT_LIMIT = 30
 
   acts_as_taggable
 
@@ -13,6 +13,21 @@ class Post < ActiveRecord::Base
   validates_presence_of   :title, :slug, :body
 
   validate                :validate_published_at_natural
+
+  named_scope             :latests, :order => "updated_at DESC", :limit => DEFAULT_LIMIT,
+    :select => "id, title, slug, published_at"
+
+  named_scope             :archives, lambda { |params|
+    beginning_of_month = begin
+      Time.parse("#{params[:year]}-#{params[:month]}-01")
+    rescue 
+      Time.now.beginning_of_month
+    end
+    end_of_month = beginning_of_month.end_of_month  
+    { :conditions => ["published_at between ? and ?", beginning_of_month, end_of_month],
+      :order => "published_at DESC",
+      :select => "id, title, slug, published_at" }
+  }
 
   def validate_published_at_natural
     errors.add("published_at_natural", "Unable to parse time") unless published?
@@ -72,6 +87,14 @@ class Post < ActiveRecord::Base
         post = nil
       end
       post || raise(ActiveRecord::RecordNotFound)
+    end
+
+    def find_archives_links
+      connection.select_all("select count(*) as total, 
+        year(created_at) as year, 
+        month(created_at) as month
+        from posts group by year,month 
+        order by concat(year, 100 + month) DESC").map(&:symbolize_keys!)
     end
 
     def find_all_grouped_by_month

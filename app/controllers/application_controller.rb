@@ -3,9 +3,8 @@
 
 class ApplicationController < ActionController::Base
   include ExceptionNotifiable
-
   helper :all # include all helpers, all the time
-
+  before_filter :latest_info, :only => [:index, :show]
   after_filter :set_content_type
 
   # See ActionController::RequestForgeryProtection for details
@@ -22,4 +21,8 @@ class ApplicationController < ActionController::Base
     @@config = Enki::Config.default
   end
   helper_method :config
+  
+  def latest_info
+    ActiveRecord::Base.connection.reconnect! unless ActiveRecord::Base.connection.active?
+  end
 end
