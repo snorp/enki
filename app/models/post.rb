@@ -4,7 +4,7 @@ class Post < ActiveRecord::Base
   acts_as_taggable
 
   has_many                :comments, :dependent => :destroy
-  has_many                :approved_comments, :class_name => 'Comment'
+  has_many                :approved_comments, :class_name => 'Comment', :conditions => { :akismet => "ham" }
 
   before_validation       :generate_slug
   before_validation       :set_dates
@@ -97,6 +97,7 @@ class Post < ActiveRecord::Base
   end
 
   def apply_filter
+    self.excerpt_html = EnkiFormatter.format_as_xhtml(self.excerpt)
     self.body_html = EnkiFormatter.format_as_xhtml(self.body)
   end
 

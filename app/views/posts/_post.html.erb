@@ -1,5 +1,6 @@
 <h2><%= link_to(h(post.title), post_path(post)) %></h2> 
 <div class="entrybody">
+	<%= post.excerpt_html.untaint unless post.excerpt_html.blank? -%>
   <%= post.body_html.untaint %>
 </div>
 <div class="meta">

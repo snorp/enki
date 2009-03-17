@@ -1,5 +1,7 @@
 class Comment < ActiveRecord::Base
   DEFAULT_LIMIT = 15
+  
+  has_rakismet :only => :create
 
   attr_accessor         :openid_error
   attr_accessor         :openid_valid

@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   include UrlHelper
+  has_rakismet
+  
   OPEN_ID_ERRORS = { 
     :missing  => "Sorry, the OpenID server couldn't be found", 
     :canceled => "OpenID verification was canceled",
