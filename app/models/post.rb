@@ -66,7 +66,7 @@ class Post < ActiveRecord::Base
       tag = options.delete(:tag)
       options = {
         :order      => 'posts.published_at DESC',
-        :conditions => ['published_at < ?', Time.now],
+        :conditions => ['published_at < ?', Time.now.utc],
         :limit      => DEFAULT_LIMIT
       }.merge(options)
       if tag
