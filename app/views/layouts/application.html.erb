@@ -8,44 +8,76 @@
   <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
   <title><%= yield(:page_title) || h(config[:title]) %></title>
   <%= stylesheet_link_tag 'application' %>
+  <%= stylesheet_link_tag 'nonzero' %>
   <%= javascript_include_tag 'jquery' %>
+  <%= javascript_include_tag 'ui/jquery-ui' %>
+  <%= javascript_include_tag 'ui/effects.slide' %>
+  <%= javascript_include_tag 'application' %>
   <%= open_id_delegation_link_tags(h(config[:open_id_delegation, :server]), h(config[:open_id_delegation, :delegate])) if config[:open_id_delegation] %>
   <%= yield(:head) %>
 </head>
 <body>
-  <div id="page_container">
-    <h1 id="page_heading"><a href="<%=h config[:url] %>"><%=h config[:title] %></a></h1>
-
-    <div id="main">
-      <%= yield %>
-    </div>
-
-    <div id="navigation">
-      <h2>Pages</h2>
-      <ul>
-        <% page_links_for_navigation.each do |link| -%>
-          <li><%= link_to(h(link.name), link.url) %></li>
-        <% end -%>
-      </ul>
-      <% unless category_links_for_navigation.empty? -%>
-        <h2>Categories</h2>
+  <div id="header">
+    <div id="header_inner" class="fluid">
+      <div id="logo">
+        <h1><span>snorp.net</span></h1>
+        <h2>by <a href="mailto:snorp at snorp.net">James Willcox</a></h2>
+      </div>
+      <div id="menu">
         <ul>
-          <% category_links_for_navigation.each do |link| -%>
-            <li><%= link_to(h(link.name), link.url) %></li>
+          <% page_links_for_navigation.each do |link| -%>
+            <li>
+              <% if link.url == request.path %>
+                <%= link_to(h(link.name), link.url, :class => "active") %>
+              <% else %>
+                <%= link_to(h(link.name), link.url) %>
+              <% end %>
+            </li>
           <% end -%>
         </ul>
-      <% end -%>
-      <form method="get" id="sform" action="http://www.google.com/search">
-        <div>
-          <h2><label for="q">Search</label></h2>
-
-          <input type="text" id="q" value="" name="q" />
-          <input type="hidden" name="sitesearch" value="<%=h config[:url] %>" />
-        </div>
-      </form>
-    </div>    
-    
-    <div id="footer"><%=h config[:title] %> &#169; <%=h config[:author, :name] %>. Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> and <%= link_to "ATOM", "http://feedvalidator.org/check.cgi?url=#{h(config[:url])}/posts.atom" %>. Powered by <a href="http://www.enkiblog.com" title="A Ruby on Rails blogging app for the fashionable developer">Enki</a>.</div>
+      </div>
+      
+    </div>
   </div>
+
+<div id="main">
+
+	<div id="main_inner" class="fluid">
+
+		<div id="primaryContent_2columns">
+
+			<div id="columnA_2columns">
+        <%= yield %>
+			</div>
+	
+		</div>
+		
+		<div id="secondaryContent_2columns">
+		
+			<div id="columnC_2columns">
+	
+				<h4><span>Veroeros</span> Etiam</h4>
+				<ul class="links">
+				<li class="first"><a href="#">Velit molestie</a></li>				<li><a href="#">Consequat cursus</a></li>				<li><a href="#">Tempus nullam</a></li>				<li><a href="#">Magna sed mauris</a></li>				<li><a href="#">Semper molestie</a></li>				</ul>
+				
+				<h4><span>Blandit</span> Consequat</h4>
+				<ul class="links">
+				<li class="first"><a href="#">Dui neque fringilla</a></li>				<li><a href="#">Metus sed donec</a></li>				<li><a href="#">Semper nisi molestie</a></li>				<li><a href="#">Sed cursus</a></li>				<li><a href="#">Tempus nullam</a></li>				<li><a href="#">Semper nisi molestie</a></li>				<li><a href="#">Sed bibendum mauris</a></li>				</ul>
+	
+				<h4><span>Cool</span> Stuff</h4>
+				<ul class="links">
+				<li class="first"><a href="http://www.nodethirtythree.com/">NodeThirtyThree</a></li>				<li><a href="http://www.4templates.com/?aff=n33">4Templates.com</a></li>				<li><a href="http://www.wpthemepark.com/">WPThemePark</a></li>				<li><a href="http://www.openwebdesign.org/userinfo.phtml?user=node33">OpenWebDesign</a></li>				<li><a href="http://www.zeroweb.org/">Zeroweb.org</a></li>				</ul>
+			</div>
+
+		</div>
+
+		<br class="clear" />
+
+	</div>
+
+</div>
+
+<div id="footer" class="fluid"><%=h config[:title] %> &#169; <%=h config[:author, :name] %>. Valid <a href="http://validator.w3.org/check?uri=referer">XHTML</a> and <%= link_to "ATOM", "http://feedvalidator.org/check.cgi?url=#{h(config[:url])}/posts.atom" %>. Powered by <a href="http://www.enkiblog.com" title="A Ruby on Rails blogging app for the fashionable developer">Enki</a>.  Design by <a href="http://nodethirtythree.com">nodethirtythree design</a></div>
+
 </body>
 </html>
