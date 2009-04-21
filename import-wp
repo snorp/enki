@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+require File.dirname(__FILE__) + '/config/environment.rb'
+require 'rexml/document'
+
+system('rake db:drop')
+system('rake db:migrate')
+
+doc = REXML::Document.new(File.read('wp-blog2.xml'))
+doc.elements.each('rss/channel/item') do |item|
+  next if item.elements['wp:status'].text != 'publish'
+
+  title = item.elements['title'].text
+  date = Time.parse(item.elements['pubDate'].text)
+  body = item.elements['content:encoded'].text
+  type = item.elements['wp:post_type'].text
+
+  next if not title
+  next if not body
+
+  if type == 'post'
+    p = Post.new
+    p.title = title
+    p.published_at = date
+    p.created_at = date
+    p.updated_at = date
+    p.edited_at = date
+    p.excerpt = ''
+    p.body = body
+    p.generate_slug
+    p.save!
+  else
+    p = Page.new
+    p.title = title
+    p.created_at = date
+    p.updated_at = date
+    p.body = body
+    p.generate_slug
+    p.save!
+  end
+end
