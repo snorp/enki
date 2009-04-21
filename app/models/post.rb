@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  DEFAULT_LIMIT = 30
+  DEFAULT_LIMIT = 5
 
   acts_as_taggable
 
@@ -18,10 +18,9 @@ class Post < ActiveRecord::Base
     :select => "id, title, slug, published_at"
 
   named_scope             :archives, lambda { |params|
-    beginning_of_month = begin
-      Time.parse("#{params[:year]}-#{params[:month]}-01")
-    rescue 
-      Time.now.beginning_of_month
+    beginning_of_month = Time.now.beginning_of_month
+    if params[:year] and params[:month]
+      beginning_of_month = Time.parse("#{params[:year]}-#{params[:month]}-01")
     end
     end_of_month = beginning_of_month.end_of_month  
     { :conditions => ["published_at between ? and ?", beginning_of_month, end_of_month],
