@@ -10,10 +10,6 @@ $(document).ready(function() {
     $(this).stop(false, true).removeClass('hover', 'slow');
   });
 
-  $("a").click(function() {
-    $(this).stop(false, true).addClass('hover', 'fast').removeClass('hover', 'fast');
-  });
-
   /* fancyness for tweetroll */
   $("li.tweet").hover(function() {
     $(this).stop(false, true).addClass('tweet_hover', 'slow');
