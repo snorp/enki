@@ -271,6 +271,11 @@ background-image: url('/images/n6.gif');
 margin-left: 1.1em;
 }
 
+p.commentbody
+{
+  clear: left;
+}
+
 /* Footer */
 
 #footer
