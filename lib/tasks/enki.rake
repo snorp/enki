@@ -27,4 +27,9 @@ namespace :enki do
   task :clean_actions => :environment do
     UndoItem.delete_all(["created_at < ?", 7.days.ago])
   end
+
+  desc "Refresh twitter rss"
+  task :refresh_tweets => :environment do
+    Tweet.refresh
+  end
 end

@@ -10,8 +10,7 @@
   <%= stylesheet_link_tag 'application' %>
   <%= stylesheet_link_tag 'nonzero' %>
   <%= javascript_include_tag 'jquery' %>
-  <%= javascript_include_tag 'ui/jquery-ui' %>
-  <%= javascript_include_tag 'ui/effects.slide' %>
+  <%= javascript_include_tag 'jquery-ui-min-custom' %>
   <%= javascript_include_tag 'application' %>
   <%= open_id_delegation_link_tags(h(config[:open_id_delegation, :server]), h(config[:open_id_delegation, :delegate])) if config[:open_id_delegation] %>
   <%= yield(:head) %>
@@ -20,14 +19,14 @@
   <div id="header">
     <div id="header_inner" class="fluid">
       <div id="logo">
-        <h1><span>snorp.net</span></h1>
+        <h1><span><a href="/">snorp.net</a></span></h1>
         <h2>home of <a href="mailto:snorp at snorp.net">James Willcox</a></h2>
       </div>
       <div id="menu">
         <ul>
           <% page_links_for_navigation.each do |link| -%>
             <li>
-              <% if link.url == request.path %>
+              <% if link.url == request.path or (link.url == '/posts' and request.path == '/') %>
                 <%= link_to(h(link.name), link.url, :class => "active") %>
               <% else %>
                 <%= link_to(h(link.name), link.url) %>
@@ -55,10 +54,22 @@
 		<div id="secondaryContent_2columns">
 		
 			<div id="columnC_2columns">
-        <form method="get" id="sform" action="http://www.google.com/search">
-          <input type="text" id="q" value="Search this site" name="q" class="text" />
-          <input type="hidden" name="sitesearch" value="<%=h config[:url] %>" />
-        </form>
+        <ul class="links">
+          <form method="get" id="sform" action="http://www.google.com/search">
+            <input type="text" id="q" value="Search this site" name="q" class="text" />
+            <input type="hidden" name="sitesearch" value="<%=h config[:url] %>" />
+          </form>
+          </li>
+        </ul>
+        <h4><span>Recent</span> Tweets</h4>
+        <ul class="links">
+          <% tweets_for_sidebar.each do |tweet| %>
+            <li class="tweet">
+            <a href="<%= tweet.link %>" class="tweetlink"></a>
+            <%= linkify_tweet_message(tweet.message) %>
+            </li>
+          <% end %>
+        </ul>
 				<h4><span>Blandit</span> Consequat</h4>
 				<ul class="links">
 				<li class="first"><a href="#">Dui neque fringilla</a></li>				<li><a href="#">Metus sed donec</a></li>				<li><a href="#">Semper nisi molestie</a></li>				<li><a href="#">Sed cursus</a></li>				<li><a href="#">Tempus nullam</a></li>				<li><a href="#">Semper nisi molestie</a></li>				<li><a href="#">Sed bibendum mauris</a></li>				</ul>
