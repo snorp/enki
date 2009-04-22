@@ -81,9 +81,25 @@ text-decoration: underline;
 color: #F16C00;
 }
 
-a:hover
+#logo span a
 {
-text-decoration: none;
+  text-decoration: none;
+  color: white;
+}
+
+#logo span a.hover
+{
+color: #F16C00;
+}
+
+#logo a.hover
+{
+  color: white;
+}
+
+a.hover
+{
+  color: #184366;
 }
 
 ul.links
@@ -94,10 +110,28 @@ list-style: none;
 ul.links li
 {
 line-height: 2em;
+padding: 6px;
 }
 
 ul.links li.first
 {
+}
+
+ul.links li.tweet
+{
+  border-bottom: dotted 1px #E1E1E1;
+  -moz-border-radius: 3px;
+  cursor: pointer;
+}
+
+ul.links li.tweet_hover
+{
+  background-color: #e1e1e1;
+}
+
+ul.links li.tweet a.tweetlink
+{
+  visibility: hidden;
 }
 
 p
@@ -228,7 +262,7 @@ margin-bottom: 0.8em;
 {
 font-size: 1.2em;
 padding-bottom: 0.175em;
-margin-bottom: 1.4em;
+/* margin-bottom: 1.4em; */
 margin-top: 0.95em;
 }
 

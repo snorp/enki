@@ -18,4 +18,15 @@ module ApplicationHelper
       'base'   => error.last
     }[error.first]
   end
+
+  def tweets_for_sidebar
+    Tweet.find_recent
+  end
+
+  def linkify_tweet_message message
+    message = h(message)
+    message.gsub!(/(^|\s)@(\w+)/, '\1@<a href="http://www.twitter.com/\2">\2</a>')
+    message.gsub!(/(^|\s)#(\w+)/, '\1#<a href="http://search.twitter.com/search?q=%23\2">\2</a>')
+    auto_link(message)
+  end
 end
