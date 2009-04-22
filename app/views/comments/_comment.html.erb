@@ -1,5 +1,5 @@
-  <%= gravatar(comment.author_email) %>
+<%= gravatar(comment.author_email, :default => gravatar_url('unknown@gravatar.com')) %>
   <cite><%= author_link(comment) %></cite> says:
   <br />
   <small class="commentmetadata"><a href="#comment-<%= comment.id %>" title=""><%= format_comment_date(comment.created_at) %></a></small>
-  <p><%= comment.body_html.untaint %></p>
+  <p class="commentbody"><%= comment.body_html.untaint %></p>
