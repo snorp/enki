@@ -1,7 +1,7 @@
 module FilesHelper
   def files_link options={}
     item = options[:path]
-    if item !~ /^\//
+    if item !~ /^\// and not @path.blank?
       item = "#{@path}/#{item}"
     end
 
