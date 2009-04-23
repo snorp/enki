@@ -1,0 +1,8 @@
+
+Post: <%= @comment.post.title %>
+Post URL: <%= "http://snorp.net" + post_path(@comment.post) %>
+
+Author: <%= @comment.author %>
+Author Email: <%= @comment.author_email %>
+
+<%= @comment.body %>
