@@ -22,8 +22,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :pages
 
+  map.connect '/files', :controller => 'files', :action => 'index', :path => '/'
   map.connect '/files/:path', :controller => 'files', :action => 'index', :requirements => { :path => /.*/ }
-  #map.connect '/files/:action', :controller => 'files'
 
   map.connect ':year/:month/:day/:slug/comments', :controller => 'comments', :action => 'index'
   map.connect ':year/:month/:day/:slug/comments/new', :controller => 'comments', :action => 'new'
