@@ -11,7 +11,7 @@ class FilesController < ApplicationController
       @real_path = "."
     end
 
-    @path = '/'
+    @path = ''
 
     if params[:path]
       @real_path = File.expand_path("#{@real_path}/#{params[:path]}".gsub(/\/\.\./, ''))
