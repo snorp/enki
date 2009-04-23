@@ -15,6 +15,17 @@
   padding: 10px;
 }
 
+/* File Browser */
+.filelisting
+{
+  width: 100%;
+}
+
+.listing_name
+{
+  width: 60%
+}
+
 /* Syntax */
 
 
