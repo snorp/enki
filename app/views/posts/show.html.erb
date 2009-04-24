@@ -6,7 +6,7 @@
 <%=h post_title(@post) -%>
 <% end -%>
 <%= render :partial => 'posts/post', :locals => {:post => @post} %>
-<ol class="commentlist">
+<ol id="comments">
   <% @post.approved_comments.each do |comment| -%>
   <li<%= cycle ' class="alt"', '' %> id="comment-<%= comment.id %>">
     <%= render :partial => 'comments/comment', :locals => {:comment => comment} %>
