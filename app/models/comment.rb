@@ -81,6 +81,8 @@ class Comment < ActiveRecord::Base
 
     def build_for_preview(params)
       comment = Comment.new_with_filter(params)
+      comment.blank_openid_fields
+
       if comment.requires_openid_authentication?
         comment.author_url = comment.author
         comment.author     = "Your OpenID Name"
