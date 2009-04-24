@@ -12,6 +12,7 @@ describe "/posts/show.html.erb" do
       :created_at              => 1.month.ago,
       :author                  => "Don Alias".taint,
       :author_url              => "http://enkiblog.com".taint,
+      :author_email            => "foo@foo.com".taint,
       :author_openid_authority => "http://enkiblog.com/server".taint,
       :body_html               => "A comment"
     )
@@ -20,6 +21,7 @@ describe "/posts/show.html.erb" do
       :created_at              => 1.month.ago,
       :author                  => "Don Alias".taint,
       :author_url              => ''.taint,
+      :author_email            => ''.taint,
       :body_html               => "A comment"
     )
 
