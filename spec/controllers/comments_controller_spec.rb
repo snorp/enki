@@ -49,7 +49,8 @@ describe CommentsController, 'handling commenting' do
       :created_at                  => 1.year.ago,
       :denormalize_comments_count! => nil,
       :slug                        => 'a-post',
-      :day                         => '01'
+      :day                         => '01',
+      :title                       => 'a post'
     }.each_pair do |attribute, value|
       @mock_post.stub!(attribute).and_return(value)
     end
@@ -220,12 +221,15 @@ end
 
 describe CommentsController, 'with an AJAX request to new' do
   before(:each) do
-    Comment.should_receive(:build_for_preview).and_return(@comment = mock_model(Comment))
-    controller.should_receive(:render).with(:partial => 'comment.html.erb')
+    Comment.should_receive(:build_for_preview).and_return(@comment = mock_model(Comment,
+      :author => 'Don Alias',
+      :body   => 'A comment'))
+
+    controller.should_receive(:render).with(:partial => 'comment.html.erb', :locals => {:comment => @comment})
 
     xhr :get, :new, :year => '2007', :month => '01', :day => '01', :slug => 'a-post', :comment => {
       :author => 'Don Alias',
-      :body   => 'A comment'
+      :body   => 'A comment',
     }
   end
 
