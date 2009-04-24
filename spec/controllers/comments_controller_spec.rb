@@ -103,12 +103,13 @@ describe CommentsController, 'handling commenting' do
         'author' => 'http://enkiblog.com',
         'body'   => 'This is a comment'
       }
+    
     end
 
     it_should_behave_like("invalid comment")
 
     it 'sets an appropriate error message on the comment' do
-      assigns(:comment).openid_error.should == "Sorry, the OpenID server couldn't be found"
+      assigns(:comment).errors.first[1].should == "Sorry, the OpenID server couldn't be found"
     end
   end
 

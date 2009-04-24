@@ -51,6 +51,7 @@ class CommentsController < ApplicationController
           session[:pending_comment] = nil
         else
           @comment.openid_error = OPEN_ID_ERRORS[ result.status ]
+          session[:pending_comment] = nil
         end
       end
     end
