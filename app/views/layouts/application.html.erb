@@ -26,7 +26,7 @@
         <ul>
           <% page_links_for_navigation.each do |link| -%>
             <li>
-              <% if link.url == request.path or (link.url == '/posts' and request.path == '/') %>
+              <% if link.url == request.path or (link.url == '/posts' and controller.controller_name == 'posts') %>
                 <%= link_to(h(link.name), link.url, :class => "active") %>
               <% else %>
                 <%= link_to(h(link.name), link.url) %>
