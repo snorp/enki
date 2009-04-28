@@ -1,8 +1,9 @@
 module FilesHelper
   def files_link options={}
     item = options[:path]
-    if item !~ /^\// and not @path.blank?
-      item = "#{@path}/#{item}"
+
+    if item !~ /^\// and not @path.blank? and not item.blank?
+      item = File.join @path, item
     end
 
     name = options[:name]
@@ -10,10 +11,12 @@ module FilesHelper
       name = File.basename(item)
     end
 
-    if options[:directory]
-      link_to name, url_for(:controller => 'files', :path => item), { :class => 'browsedir' }
+    if item.blank?
+      link_to name, "/files"
+    elsif options[:directory]
+      link_to name, "/files/#{item}", :class => 'browsedir'
     else
-      link_to name, url_for(:controller => 'files', :path => item)
+      link_to name, "/files/#{item}"
     end
   end
 
