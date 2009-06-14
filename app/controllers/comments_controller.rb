@@ -33,12 +33,19 @@ class CommentsController < ApplicationController
     @comment = Comment.new((session[:pending_comment] || params[:comment] || {}).reject {|key, value| !Comment.protected_attribute?(key) })
     @comment.post = @post
 
+    if not session[:pending_comment] and not verify_recaptcha(:model => @comment)
+      render :template => 'posts/show'
+      return
+    end
+
     session[:pending_comment] = nil
 
     unless @comment.requires_openid_authentication?
       @comment.blank_openid_fields
+      valid_recaptcha = verify_recaptcha(:model => @comment)
     else
       session[:pending_comment] = params[:comment]
+
       return if authenticate_with_open_id(@comment.author, :optional => [:nickname, :fullname, :email]) do |result, identity_url, registration|
         if result.status == :successful
           @comment.post = @post
