@@ -1,6 +1,6 @@
 
 Post: <%= @comment.post.title %>
-Post URL: <%= "http://snorp.net" + post_path(@comment.post) %>
+URL: <%= "http://snorp.net" + post_path(@comment.post, :anchor => "comment-#{@comment.id}") %>
 
 Author: <%= @comment.author %>
 Author Email: <%= @comment.author_email %>

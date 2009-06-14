@@ -1,9 +1,9 @@
 <div class="browsernav">
-  <%= files_link :name => 'Home', :path => '/', :directory => true %> /
-  <% current_path = "" %>
+  <%= files_link :name => 'Home', :path => '', :directory => true %> /
+  <% current_path = "/" %>
   <% @path.split('/').each do |part| %>
     <% next if part.empty? %>
-    <% current_path = "#{current_path}/#{part}" %>
+    <% current_path = File.join(current_path, part) %>
     <%= files_link :path => current_path, :directory => true %> /
   <% end %>
 </div>
